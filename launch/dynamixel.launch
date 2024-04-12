@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="machine"/>
+  <arg name="output" default="screen"/>
+  <arg name="config" default="$(dirname)/../configs/openrb.yaml"/>
+
+  <node machine="$(arg machine)"
+    pkg="am_openrb_onboard_link"
+    type="openrb_onboard_node"
+    name="openrb_connection_manager"
+    output="$(arg output)">
+    <rosparam command="load" file="$(arg config)"/>
+    <remap from="joint_state" to="/mavros/am_control/joint_state"/>
+    <remap from="joint_cmd" to="/mavros/am_control/joint_setpoint"/>
+    <remap from="gripper_cmd" to="gripper_cmd"/>
+  </node>
+</launch>
+

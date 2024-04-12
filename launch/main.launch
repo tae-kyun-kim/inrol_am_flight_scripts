@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="fcu_url" default="/dev/ttyPixhawk:921600"/>
+  <arg name="gcs_url" default="udp://:14550@127.0.0.1:14557"/>
+  <arg name="env_path" default="/home/ubuntu/.local/share/door-home/env.sh"/>
+
+  <machine
+    name="rpi"
+    address="ubuntu.local"
+    env-loader="$(arg env_path)"
+    default="never"
+    user="ubuntu"/>
+
+  <include file="$(dirname)/mavros.launch">
+    <arg name="fcu_url" value="$(arg fcu_url)"/>
+    <arg name="gcs_url" value="$(arg gcs_url)"/>
+    <arg name="machine" value="rpi"/>
+  </include>
+
+  <include file="$(dirname)/dynamixel.launch">
+    <arg name="machine" value="rpi"/>
+  </include>
+
+  <include file="$(dirname)/optitrack.launch">
+    <arg name="machine" value="rpi"/>
+    <arg name="server" value="192.168.0.231"/>
+  </include>
+</launch>

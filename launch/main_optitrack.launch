@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="env_path" default="/home/ubuntu/.local/share/door-home/env.sh"/>
+
+  <machine
+    name="rpi"
+    address="ubuntu.local"
+    env-loader="$(arg env_path)"
+    default="never"
+    user="ubuntu"/>
+
+  <include file="$(dirname)/optitrack.launch">
+    <arg name="machine" value=""/>
+    <arg name="server" value="192.168.0.231"/>
+  </include>
+</launch>
