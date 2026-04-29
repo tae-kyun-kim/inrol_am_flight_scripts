@@ -2,19 +2,20 @@
 <launch>
   <arg name="fcu_url" default="/dev/ttyPixhawk:921600"/>
   <arg name="gcs_url" default="udp://:14550@127.0.0.1:14557"/>
-  <arg name="env_path" default="/home/ubuntu/.local/share/door-home/env.sh"/>
+  <arg name="env_path" default="/home/inrol-am2/.local/share/am/env.sh"/>
 
   <machine
-    name="rpi"
-    address="ubuntu.local"
+    name="agent-b"
+    address="inrol-am-b.local"
     env-loader="$(arg env_path)"
     default="never"
-    user="ubuntu"/>
+    user="inrol-am2"/>
 
   <include file="$(dirname)/mavros.launch">
     <arg name="fcu_url" value="$(arg fcu_url)"/>
     <arg name="gcs_url" value="$(arg gcs_url)"/>
-    <arg name="machine" value="rpi"/>
+    <arg name="machine" value="agent-b"/>
+    <arg name="namespace" value="agent2"/>
   </include>
 
   <include file="$(dirname)/dynamixel.launch">
@@ -22,7 +23,7 @@
   </include>
 
   <include file="$(dirname)/optitrack.launch">
-    <arg name="machine" value="rpi"/>
-    <arg name="server" value="192.168.0.231"/>
+    <arg name="machine" value="agent-b"/>
+    <arg name="server" value="192.168.0.8"/>
   </include>
 </launch>
